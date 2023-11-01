@@ -22,6 +22,7 @@ export default function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  //#region handel Register
   const handleRegister = async () => {
     try {
       const auth = getAuth(app);
@@ -41,6 +42,7 @@ export default function App() {
       console.error("Error registering user: ", error.message);
     }
   };
+  //#endregion
 
   return (
     <>
