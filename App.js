@@ -3,7 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View, Keyboard } from "react-native";
 import { Container, StyledTextInput, StyledButton } from "./src/logIn.style";
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword  } from "firebase/auth";
 
 // Initialize Firebase
 // Your web app's Firebase configuration
@@ -44,6 +44,28 @@ export default function App() {
   };
   //#endregion
 
+//#region  handel Login
+  const handleLogin = async () => {
+    try {
+      const auth = getAuth(app);
+      await signInWithEmailAndPassword(auth, email, password);
+
+      // If the user login is successful, you can redirect the user to another screen or perform other actions.
+      console.log("User successfully logged in!");
+
+      // Clear email and password states
+      setEmail("");
+      setPassword("");
+
+      // Dismiss the keyboard
+      Keyboard.dismiss();
+    } catch (error) {
+      // Handle login errors, such as incorrect credentials
+      console.error("Error signing in: ", error.message);
+    }
+  };
+//#endregion
+
   return (
     <>
       <Container>
@@ -58,7 +80,7 @@ export default function App() {
           value={password}
           onChangeText={(text) => setPassword(text)}
         />
-        <StyledButton title="Register" onPress={handleRegister} />
+        <StyledButton title="Register" onPress={handleLogin} />
       </Container>
       <StatusBar style="auto" />
     </>
